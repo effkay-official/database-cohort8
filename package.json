@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -11,9 +12,11 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.11.0",
     "express": "^5.2.1",
     "mongodb": "^7.6.0",
     "mongoose": "^9.9.4",
+    "multer": "^2.3.0",
     "node": "^26.8.1"
   }
 }

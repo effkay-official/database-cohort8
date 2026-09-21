@@ -1,27 +1,27 @@
-require('dotenv').config();
-const express = require("express")
+const express = require('express');
 const mongoose = require('mongoose');
-const userRoute = require("./routes/userRoutes.js")
-const productRoute = require("./routes/productRoutes.js")
-const compass_string = process.env.COMPASS_STRING
-const atlas_string = process.env.ATLAS_STRING
+const dotenv = require('dotenv');
+const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
 
-mongoose.connect(compass_string)
-    .then(() => console.log("MongoDB Connected"))
-    .catch(err => console.error("Connection Error: ", err));
+dotenv.config();
 
+const app = express();
+const port = process.env.PORT || 5555;
 
-const app = express()
-const port = 5555
+app.use(express.json());
 
+app.use('/users', userRoutes);
+app.use('/products', productRoutes);
 
-app.use(express.json())
+const mongoURI = process.env.COMPASS_STRING || process.env.ATLAS_STRING;
+if (!mongoURI) {
+  console.error('MongoDB connection string is missing. Set COMPASS_STRING or ATLAS_STRING in .env');
+  process.exit(1);
+}
 
-app.get("/", (req, res) => {
-    res.send("server is active")
-})
-app.use("/users", userRoute)
-app.use("/products" , productRoute)
-app.listen(port, () => {
-    console.log(`server is up and running on port : ${port}`)
-})
+mongoose.connect(mongoURI)
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+app.listen(port, () => console.log(`Server running on port ${port}`));

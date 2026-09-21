@@ -4,11 +4,13 @@ const productModel = require('../model/productModel');
 const createProduct = async (req, res) => {
   try {
     const { name, price, description, quantity, stock, category } = req.body;
+
     // multer-storage-cloudinary-v2 already uploads the file and sets req.file.path to the secure URL
     const imageUrl = req.file ? req.file.path : null;
     if (!imageUrl) {
       return res.status(400).json({ message: 'Image is required' });
     }
+
     const product = new productModel({
       name,
       price,
@@ -18,6 +20,7 @@ const createProduct = async (req, res) => {
       stock,
       category,
     });
+
     await product.save();
     res.status(201).json({ message: 'Product created successfully', product });
   } catch (error) {

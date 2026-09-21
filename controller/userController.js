@@ -44,7 +44,7 @@ const loginUser = async (req, res) => {
             message: "Login successful",
             data: user
         })
-
+    }}
 //GENERAL GET : 
  const getAllUsers = async (req, res) => {
     try {
